@@ -1,10 +1,13 @@
+import 'dotenv/config';
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose"
+import initDb from "./db/connection.js";
 import authorsRoute from "./routes/authors.js"
 import booksRoute from "./routes/books.js"
 //import booksRoute from "./routes/books.js"
 //import records from "./routes/record.js";
+
+
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -21,3 +24,5 @@ app.use("/books", booksRoute)
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+initDb()
