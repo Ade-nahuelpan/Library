@@ -1,13 +1,12 @@
 import { Router } from 'express';
-import bookController from '../controller/bookController.js';
-
+import { getBooksWithAuthors, getAll } from '../controllers/bookController.js';
 const router = Router();
 
-router.get('/',  bookController.getAll);
-router.get('/:id', bookController.getBookById);
-router.get('/:author', bookController.getBookByAuthor);
-router.post('/',  bookController.create);
-router.delete('/:id',  bookController.deleteBook);
-router.patch('/:id',  bookController.updateBook);
+router.get('/',  getAll);
+// router.get('/:id', bookController.getBookById);
+router.get('/with-authors', getBooksWithAuthors);
+// router.post('/',  bookController.create);
+// router.delete('/:id',  bookController.deleteBook);
+// router.patch('/:id',  bookController.updateBook);
 
 export default router;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'
 
 const bookSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -12,4 +12,10 @@ const bookSchema = new mongoose.Schema({
   available: { type: Boolean, default: true },
 });
 
-module.exports = mongoose.model("Book", bookSchema);
+const BookModel = mongoose.model("Book", bookSchema);
+
+const getAll = async () => {
+  return BookModel.find({});
+};
+
+export default {BookModel, getAll};
