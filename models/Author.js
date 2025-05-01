@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'
 
 const authorSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -6,4 +6,10 @@ const authorSchema = new mongoose.Schema({
   nationality: String,
 });
 
-module.exports = mongoose.model("Author", authorSchema);
+const AuthorModel = mongoose.model("Author", authorSchema);
+
+const getAll = async () => {
+  return AuthorModel.find({});
+};
+
+export default { AuthorModel, getAll };

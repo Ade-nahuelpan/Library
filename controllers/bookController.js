@@ -1,13 +1,12 @@
 import Book from "../models/Book.js";
 
-
-
 export const getAll = async (req, res) => {
   try {
     const books = await Book.getAll()
+    res.status(200).json({ status: 200, data: books });
     res.json(books);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error al obtener libros" });
   }
 };

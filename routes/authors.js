@@ -1,9 +1,9 @@
-import { Router } from 'express';
-//import authorController from '../controller/authorController.js';
+import { Router } from "express";
+import { getAll } from "../controllers/authorController.js";
 
 const router = Router();
 
-// router.get('/',  authorController.getAll);
+router.get("/", getAll);
 // router.get('/:id', authorController.getAuthorById);
 // router.post('/',  authorController.create);
 // router.delete('/:id',  authorController.deleteAuthor);
