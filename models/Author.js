@@ -12,4 +12,8 @@ const getAll = async () => {
   return AuthorModel.find({});
 };
 
-export default { AuthorModel, getAll };
+const getById = async (_id) => {
+  return AuthorModel.findById(_id);
+};
+
+export default { AuthorModel, getAll, getById };

@@ -18,4 +18,8 @@ const getAll = async () => {
   return BookModel.find({});
 };
 
-export default {BookModel, getAll};
+const getById = async (id) => {
+  return BookModel.findById(id);
+};
+
+export default {BookModel, getAll, getById};
