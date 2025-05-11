@@ -1,6 +1,6 @@
 import Book from "../models/Book.js";
 
-export const getAll = async (req, res) => {
+const getAll = async (req, res) => {
   try {
     const books = await Book.getAll()
     res.status(200).json({ status: 200, data: books });
@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
   }
 };
 
-export const getById = async (req, res) => {
+const getById = async (req, res) => {
   try {
     const {id} = req.params;
     const book = await Book.getById(id);
@@ -29,8 +29,25 @@ export const getById = async (req, res) => {
   }
 };
 
+const create = async (req, res) => {
+  try {
+    const bookData = req.body; //requiere el body
+    const createdBook = await Book.create(bookData); //crea el libro
+    res.status(200).json({
+      status: 200,
+      data: createdBook,
+    });
+  } catch (error) {
+    console.log(createdBook)
+    console.error('Error creating book:', error);
+    res.status(500).json({
+      status: 500,
+      error: 'Internal Server Error',
+    });
+  }
+};
 
-export const getBooksWithAuthors = async (req, res) => {
+const getBooksWithAuthors = async (req, res) => {
   try {
     const books = await Book.find().populate("author");
     res.json(books);
@@ -39,4 +56,5 @@ export const getBooksWithAuthors = async (req, res) => {
   }
 };
 
+export { getAll, getById, create, getBooksWithAuthors };
 

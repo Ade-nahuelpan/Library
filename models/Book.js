@@ -22,4 +22,12 @@ const getById = async (id) => {
   return BookModel.findById(id);
 };
 
-export default {BookModel, getAll, getById};
+const create = async (bookData) => {
+  const book = new BookModel(bookData);
+  return book.save();
+};
+
+
+
+
+export default {BookModel, getAll, getById, create};
