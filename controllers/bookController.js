@@ -47,6 +47,36 @@ const create = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const bookData = req.body;
+    const updatedBook = await Book.update(id, bookData);
+    console.log(updatedBook)
+    if (!updatedBook) {
+      return res.status(404).json({ status: 404, error: 'Book not found' });
+    }
+    res.status(200).json({ status: 200, data: updatedBook });
+  } catch (error) {
+    console.error('Error updating book:', error);
+    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+  }
+};
+
+const deleteById = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const deletedBook = await Book.deleteById(id);
+    if (!deletedBook) {
+      return res.status(404).json({ status: 404, error: 'Book not found' });
+    } 
+    res.status(200).json({ status: 200, message: 'Book deleted successfully' });
+  }catch (error) {
+    console.error('Error deleting book:', error);
+    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+  }
+}
+
 const getBooksWithAuthors = async (req, res) => {
   try {
     const books = await Book.find().populate("author");
@@ -56,5 +86,5 @@ const getBooksWithAuthors = async (req, res) => {
   }
 };
 
-export { getAll, getById, create, getBooksWithAuthors };
+export { getAll, getById, create, update, getBooksWithAuthors, deleteById };
 

@@ -27,7 +27,12 @@ const create = async (bookData) => {
   return book.save();
 };
 
+const update  = async (id, bookData) => {
+  return BookModel.findByIdAndUpdate(id, bookData, { new: true });
+}
 
+const deleteById = async (id) => {
+  return BookModel.findByIdAndDelete(id);
+};
 
-
-export default {BookModel, getAll, getById, create};
+export default {BookModel, getAll, getById, create, update, deleteById};

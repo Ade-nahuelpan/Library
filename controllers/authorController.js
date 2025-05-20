@@ -1,6 +1,6 @@
 import Author from "../models/Author.js";
 
-export const getAll = async (req, res) => {
+ const getAll = async (req, res) => {
   try {
     const authors = await Author.getAll();
     res.status(200).json({
@@ -28,3 +28,21 @@ const getById = async (req, res) => {
   }
 };
 
+const create = async (req, res) => {
+  try {
+    const authorData = req.body;
+    const createdAuthor = await Author.create(authorData);
+    res.status(200).json({
+      status: 200,
+      data: createdAuthor,
+    });
+  } catch (error) {
+    console.error("Error creating author:", error);
+    res.status(500).json({
+      status: 500,
+      error: "Internal Server Error",
+    });
+  }
+}
+
+export { getAll, getById, create };
