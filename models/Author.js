@@ -22,6 +22,7 @@ const create = async (authorData) => {
 }
 
 const update = async (_id, authorData) => {
+  return AuthorModel.findByIdAndUpdate(id, authorData, { new: true });
 };
 
-export default { AuthorModel, getAll, getById, create };
+export default { AuthorModel, getAll, getById, create, update };

@@ -45,4 +45,19 @@ const create = async (req, res) => {
   }
 }
 
-export { getAll, getById, create };
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const authorData = req.body;
+    const updatedAuthor = await Author.update(id, authorData)
+    console.log(updatedAuthor)
+    if (!updatedAuthor) {
+      return res.status(404).json({ status:404, error : 'Author not found' });
+    }
+    res.status(200).json({ status: 200, data: updatedAuthor})
+  } catch (error) {
+      console.error('Error updating author: ', error);
+      res.status(500).json({ status:500, error: 'Internal Server Error'})
+  }
+}
+export { getAll, getById, create, update };
