@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const authorSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -15,14 +15,14 @@ const getAll = async () => {
 const getById = async (_id) => {
   return AuthorModel.findById(_id);
 };
- 
+
 const create = async (authorData) => {
   const author = new AuthorModel(authorData);
   return author.save();
-}
+};
 
 const update = async (_id, authorData) => {
-  return AuthorModel.findByIdAndUpdate(id, authorData, { new: true });
+  return AuthorModel.findByIdAndUpdate(_id, authorData, { new: true });
 };
 
 export default { AuthorModel, getAll, getById, create, update };

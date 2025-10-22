@@ -1,11 +1,11 @@
 import Author from "../models/Author.js";
 
- const getAll = async (req, res) => {
+const getAll = async (req, res) => {
   try {
     const authors = await Author.getAll();
     res.status(200).json({
-      status: 200, 
-      data: authors 
+      status: 200,
+      data: authors,
     });
     res.json(authors);
   } catch (error) {
@@ -15,14 +15,14 @@ import Author from "../models/Author.js";
 };
 
 const getById = async (req, res) => {
-  try{
+  try {
     const { id } = req.params;
     const author = await Author.getById(id);
     if (!author) {
       return res.status(404).json({ status: 404, error: "Author not found" });
     }
     res.status(200).json({ status: 200, data: author });
-  }catch(error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({ status: 500, error: "Internal Server Error" });
   }
@@ -43,21 +43,22 @@ const create = async (req, res) => {
       error: "Internal Server Error",
     });
   }
-}
+};
 
 const update = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("id", id);
     const authorData = req.body;
-    const updatedAuthor = await Author.update(id, authorData)
-    console.log(updatedAuthor)
+    const updatedAuthor = await Author.update(id, authorData);
+    console.log(updatedAuthor);
     if (!updatedAuthor) {
-      return res.status(404).json({ status:404, error : 'Author not found' });
+      return res.status(404).json({ status: 404, error: "Author not found" });
     }
-    res.status(200).json({ status: 200, data: updatedAuthor})
+    res.status(200).json({ status: 200, data: updatedAuthor });
   } catch (error) {
-      console.error('Error updating author: ', error);
-      res.status(500).json({ status:500, error: 'Internal Server Error'})
+    console.error("Error updating author: ", error);
+    res.status(500).json({ status: 500, error: "Internal Server Error" });
   }
-}
+};
 export { getAll, getById, create, update };
