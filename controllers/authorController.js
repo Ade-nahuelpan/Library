@@ -30,7 +30,19 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    const requiredFields = ["name", "email", "birthdate", "nationality"];
     const authorData = req.body;
+
+    const missingFields = requiredFields.filter((field) => !authorData[field]);
+
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        status: 400,
+        error: `Faltan los siguientes campos requeridos: ${missingFields.join(
+          ", "
+        )}`,
+      });
+    }
     const createdAuthor = await Author.create(authorData);
     res.status(200).json({
       status: 200,

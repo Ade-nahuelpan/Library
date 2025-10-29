@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const bookSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -27,12 +27,12 @@ const create = async (bookData) => {
   return book.save();
 };
 
-const update  = async (id, bookData) => {
+const update = async (id, bookData) => {
   return BookModel.findByIdAndUpdate(id, bookData, { new: true });
-}
+};
 
 const deleteById = async (id) => {
   return BookModel.findByIdAndDelete(id);
 };
 
-export default {BookModel, getAll, getById, create, update, deleteById};
+export default { BookModel, getAll, getById, create, update, deleteById };

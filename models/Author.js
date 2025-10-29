@@ -4,12 +4,15 @@ const authorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   birthdate: Date,
   nationality: String,
+  books: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Book", required: true },
+  ],
 });
 
 const AuthorModel = mongoose.model("Author", authorSchema);
 
 const getAll = async () => {
-  return AuthorModel.find({});
+  return AuthorModel.find({}).populate("books");
 };
 
 const getById = async (_id) => {

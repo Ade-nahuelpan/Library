@@ -2,7 +2,7 @@ import Book from "../models/Book.js";
 
 const getAll = async (req, res) => {
   try {
-    const books = await Book.getAll()
+    const books = await Book.getAll();
     res.status(200).json({ status: 200, data: books });
     res.json(books);
   } catch (error) {
@@ -13,36 +13,45 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const book = await Book.getById(id);
     if (!book) {
-      return res
-        .status(404)
-        .json({ status: 404, error: 'Book not found' });
+      return res.status(404).json({ status: 404, error: "Book not found" });
     }
-    res.status(200).json({ status: 200, data: book });;
+    res.status(200).json({ status: 200, data: book });
   } catch (error) {
     console.error(error);
     // console.log(book)
-    console.log(id)
-    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+    console.log(id);
+    res.status(500).json({ status: 500, error: "Internal Server Error" });
   }
 };
 
 const create = async (req, res) => {
   try {
+    const requiredFields = ["title", "author", "publishedYear", "genres"];
     const bookData = req.body; //requiere el body
+    const missingFields = requiredFields.filter((field) => !bookData[field]);
+
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        status: 400,
+        error: `Faltan los siguientes campos requeridos: ${missingFields.join(
+          ", "
+        )}`,
+      });
+    }
     const createdBook = await Book.create(bookData); //crea el libro
     res.status(200).json({
       status: 200,
       data: createdBook,
     });
   } catch (error) {
-    console.log(createdBook)
-    console.error('Error creating book:', error);
+    console.log(createdBook);
+    console.error("Error creating book:", error);
     res.status(500).json({
       status: 500,
-      error: 'Internal Server Error',
+      error: "Internal Server Error",
     });
   }
 };
@@ -52,30 +61,30 @@ const update = async (req, res) => {
     const { id } = req.params;
     const bookData = req.body;
     const updatedBook = await Book.update(id, bookData);
-    console.log(updatedBook)
+    console.log(updatedBook);
     if (!updatedBook) {
-      return res.status(404).json({ status: 404, error: 'Book not found' });
+      return res.status(404).json({ status: 404, error: "Book not found" });
     }
     res.status(200).json({ status: 200, data: updatedBook });
   } catch (error) {
-    console.error('Error updating book:', error);
-    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+    console.error("Error updating book:", error);
+    res.status(500).json({ status: 500, error: "Internal Server Error" });
   }
 };
 
 const deleteById = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const deletedBook = await Book.deleteById(id);
     if (!deletedBook) {
-      return res.status(404).json({ status: 404, error: 'Book not found' });
-    } 
-    res.status(200).json({ status: 200, message: 'Book deleted successfully' });
-  }catch (error) {
-    console.error('Error deleting book:', error);
-    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+      return res.status(404).json({ status: 404, error: "Book not found" });
+    }
+    res.status(200).json({ status: 200, message: "Book deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting book:", error);
+    res.status(500).json({ status: 500, error: "Internal Server Error" });
   }
-}
+};
 
 const getBooksWithAuthors = async (req, res) => {
   try {
@@ -87,4 +96,3 @@ const getBooksWithAuthors = async (req, res) => {
 };
 
 export { getAll, getById, create, update, getBooksWithAuthors, deleteById };
-
